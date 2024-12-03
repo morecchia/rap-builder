@@ -1,0 +1,53 @@
+<BuildTools>
+  <BuildHelper>
+    <Projects>
+      <Build>
+        <!--Add a Project Element for each project that needs to be included in the app-->
+        <Project path="..\{{PATH_TO_CSPROJ_FILE}}">
+          <Platforms>
+            <Platform>AnyCPU</Platform>
+          </Platforms>
+        </Project>
+      </Build>
+      <Ignore>
+        <!--Add an Project Element for each project that needs to be ignored in the build-->
+        <Project path="..\{{PATH_TO_CSPROJ_FILE}}">
+          <Platforms>
+            <Platform>AnyCPU</Platform>
+          </Platforms>
+        </Project>
+      </Ignore>
+    </Projects>
+    <References>
+      <Maps />
+      <Adds />
+    </References>
+    <Rules>
+      <Rule name="SharedAssemblyInfo">
+        <!--Each Project must use the SharedAssemblyInfo.cs file-->
+        <Extensions>
+          <Extension>.csproj</Extension>
+        </Extensions>
+        <XPath>Compile[contains(@Include, '..\version\SharedAssemblyInfo.')]</XPath>
+        <RuleType>Exists</RuleType>
+        <ErrorMessage>Not using the Common AssemblyInfo file. Please include it in the project.</ErrorMessage>
+      </Rule>
+    </Rules>
+  </BuildHelper>
+  <RAPBuilder>
+    <Applications>
+      <Application name="{{APPLICATION_NAME}}" generatenuspec="false">
+        <Destination>..\{{APPLICATION_NAME}}.rap</Destination>
+        <ApplicationSchema>..\application.xml</ApplicationSchema>
+        <Assemblies>
+          <!--Add an Assembly Element for each DLL that needs to be included in the app-->
+          <Assembly>..\{{PATH_TO_ASSEMBLY}}.dll</Assembly>
+        </Assemblies>
+        <ResourceFiles />
+        <CustomPages>
+		    <CustomPage guid="{{CUSTOM_PAGE_GUID}}">..\{{PATH_TO_CUSTOM_PAGE}}}</CustomPage>
+        </CustomPages>
+      </Application>
+    </Applications>
+  </RAPBuilder>
+</BuildTools>
